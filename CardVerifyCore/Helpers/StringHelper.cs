@@ -6,6 +6,10 @@ namespace CreditCardVerification.Helpers
     {
         public static string RemoveWhiteSpace(this string input)
         {
+            if (input == null)
+            {
+                return null;
+            }
             return new string(input.ToCharArray()
                 .Where(c => !char.IsWhiteSpace(c))
                 .ToArray());

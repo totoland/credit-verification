@@ -46,11 +46,18 @@ namespace CardVerifyCore.Helpers
 
         public static void CheckValidDomainValidation(CreditCardModel creditCard)
         {
+            if (creditCard.CardNumber == null || creditCard.ExpiryDate == null)
+            {
+                throw new ArgumentException("Invalid request.");
+            }
+
             //Card Number (Numeric 15 or 16 digits) 
             //Expiry date (MMYYYY)
-
             if (!ValidationHelper.IsAValidNumber(creditCard.CardNumber))
                 throw new ArgumentException("Invalid number, just numbers is accepted on the string.");
+
+            if (creditCard.CardNumber.Length < 15 || creditCard.CardNumber.Length > 16)
+                throw new ArgumentException("Invalid number digit.");
 
             if (!ValidationHelper.IsAValidDateFormat(creditCard.ExpiryDate))
                 throw new ArgumentException("Invalid expiry date.");

@@ -21,6 +21,11 @@ namespace CardVerifyCore.Controllers
             this._logger = _logger;
         }
 
+        [HttpPost("{request}", Name = "validate")]
+        public async Task<IActionResult> Validate([FromBody]CardValidateRequest request)
+        {
+            return await Get(request.CardNumber, request.ExpiryDate);
+        }
 
         [HttpGet("{cardnumber}/{expirydate}")]
         [ProducesResponseType(200)]
@@ -58,13 +63,6 @@ namespace CardVerifyCore.Controllers
             }
 
             return Ok(response);
-        }
-
-     
-        [HttpPost("{request}", Name = "validate")]
-        public async Task<IActionResult> Validate([FromBody]CardValidateRequest request)
-        {
-            return await Get(request.CardNumber, request.ExpiryDate);
         }
     }
 }

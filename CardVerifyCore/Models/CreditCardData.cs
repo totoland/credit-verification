@@ -92,10 +92,23 @@ namespace CardVerifyCore.Models.Enums
                 }
             };
 
+            var Unknown = new CardInfo
+            {
+                BrandName = "Unknown",
+                Rules = new List<Rule>
+                {
+                    new Rule
+                    {
+                        Lengths =  new List<int> { 15,16 }
+                    }
+                }
+            };
+
             AllCardInfos.Add(CreditCardType.Visa, Visa);
             AllCardInfos.Add(CreditCardType.MasterCard, MasterCard);
             AllCardInfos.Add(CreditCardType.AmericanExpress, AmericanExpress);
             AllCardInfos.Add(CreditCardType.JCB, JCB);
+            AllCardInfos.Add(CreditCardType.Unknown, Unknown);
         }
     }
 
