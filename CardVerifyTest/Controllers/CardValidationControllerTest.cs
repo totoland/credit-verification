@@ -90,7 +90,7 @@ namespace CardVerifyTest.Controllers.Test
         }
 
         [Fact]
-        public async Task Test_MasterCard()
+        public async Task Test_MasterCard_Valid()
         {
             //Test with 5290389773644435 with prime year 022027
             var actionResult = await _cardValidationController.Validate(
@@ -112,7 +112,7 @@ namespace CardVerifyTest.Controllers.Test
         }
 
         [Fact]
-        public async Task Test_Amex()
+        public async Task Test_Amex_Valid()
         {
             //Test with "349309553334447", "379309553334447" with year 022029
             foreach (string validCard in ValidAmexs)
@@ -137,7 +137,7 @@ namespace CardVerifyTest.Controllers.Test
         }
 
         [Fact]
-        public async Task Test_JCB()
+        public async Task Test_JCB_Valid()
         {
             //Test with "352809553334447", "358909553334447" with year 022029
             foreach (string validCard in ValidJCBs)
