@@ -86,7 +86,7 @@ namespace CardVerifyCore.Models.Enums
                 {
                     new Rule
                     {
-                        Lengths =  new List<int> { 16 },
+                        Lengths =  new List<int> { 15,16 },
                         Prefixes = _prefixJCB
                     }
                 }

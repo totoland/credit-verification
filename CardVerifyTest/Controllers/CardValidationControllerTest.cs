@@ -1,7 +1,9 @@
 ﻿using CardVerifyCore;
 using CardVerifyCore.Controllers;
 using CardVerifyCore.Models;
+using CardVerifyCore.Models.Enums;
 using CreditCardVerification.Data.Entities;
+using CreditCardVerification.Data.Models;
 using CreditCardVerification.Interfaces.IRepositories;
 using CreditCardVerification.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +22,7 @@ namespace CardVerifyTest.Controllers.Test
         private readonly string[] ValidVisas = { "4397435601344857" };
         private readonly string[] ValidMasterCards = { "5290389773644435" };
         private readonly string[] ValidAmexs = { "349309553334447", "379309553334447" };
-        private readonly string[] ValidJCBs = { "352809553334447", "358909553334447" };
+        private readonly string[] ValidJCBs = { "3528095533344470", "3589095533344470" };
         private readonly string[] UnknowCards = { "1111111111111111" };
         private readonly string[] InvalidDomainCards = { "111","43243dsfdsfs","whyalwaysme" };
 
@@ -83,7 +85,7 @@ namespace CardVerifyTest.Controllers.Test
             ServerResponse resp = okResult.Value as ServerResponse;
 
             //expect is Visa
-            Assert.True(200 == resp.RespCode, resp.RespDesc);
+            Assert.True(CreditCardType.Visa.ToString() == ((CreditCardModel)resp.Result).Type, resp.RespDesc);
 
         }
 
@@ -106,7 +108,7 @@ namespace CardVerifyTest.Controllers.Test
             ServerResponse resp = okResult.Value as ServerResponse;
 
             //expect is MasterCard
-            Assert.True(200 == resp.RespCode, resp.RespDesc);
+            Assert.True(CreditCardType.MasterCard.ToString() == ((CreditCardModel)resp.Result).Type, resp.RespDesc);
         }
 
         [Fact]
@@ -130,7 +132,7 @@ namespace CardVerifyTest.Controllers.Test
                 ServerResponse resp = okResult.Value as ServerResponse;
 
                 //expect is Amex
-                Assert.True(200 == resp.RespCode, resp.RespDesc);
+                Assert.True(CreditCardType.AmericanExpress.ToString() == ((CreditCardModel)resp.Result).Type, resp.RespDesc);
             }
         }
 
@@ -155,7 +157,7 @@ namespace CardVerifyTest.Controllers.Test
                 ServerResponse resp = okResult.Value as ServerResponse;
 
                 //expect is JCB
-                Assert.True(200 == resp.RespCode, resp.RespDesc);
+                Assert.True(CreditCardType.JCB.ToString() == ((CreditCardModel)resp.Result).Type, resp.RespDesc);
             }
         }
 
@@ -180,7 +182,7 @@ namespace CardVerifyTest.Controllers.Test
                 ServerResponse resp = okResult.Value as ServerResponse;
 
                 //expect is Unknown card
-                Assert.True(200 == resp.RespCode, resp.RespDesc);
+                Assert.True(CreditCardType.Unknown.ToString() == ((CreditCardModel)resp.Result).Type, resp.RespDesc);
             }
         }
 
