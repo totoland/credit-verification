@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using CardVerifyCore.Models;
-using CreditCardVerification.Data.Models;
 using CreditCardVerification.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -25,13 +22,12 @@ namespace CardVerifyCore.Controllers
         }
 
 
-        // GET api/cardvalidation/verify/54717781544187/012018
         [HttpGet("{cardnumber}/{expirydate}")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         public async Task<IActionResult> Get(string cardnumber,string expirydate)
         {
-            var response = new ServerResponse();
+            var response = ServerResponse.OK;
 
             try
             {
@@ -45,27 +41,28 @@ namespace CardVerifyCore.Controllers
                 else
                 {
                     response.Result = cardModel;
-                    response.RespDesc = "";
                 }
 
             }
             catch (ArgumentException ex)
             {
                 _logger.LogWarning("Invalid input: ",ex.Message);
+                response = ServerResponse.BadRequest;
                 response.RespDesc = ex.Message;
             }
             catch (Exception ex)
             {
                 _logger.LogError("Unexpected exception ", ex.ToString());
-                return StatusCode(500, "A problem happened while handling your request");
+                response = ServerResponse.ERROR;
+                response.RespDesc = "A problem happened while handling your request";
             }
 
             return Ok(response);
         }
 
-        // GET post/cardvalidation/verify/
+     
         [HttpPost("{request}", Name = "validate")]
-        public async Task<IActionResult> Validate([FromBody]CreditCardModel request)
+        public async Task<IActionResult> Validate([FromBody]CardValidateRequest request)
         {
             return await Get(request.CardNumber, request.ExpiryDate);
         }
